@@ -1,81 +1,83 @@
 $(document).ready(function () {
-  function getPosition(e) {
-    var x = (y = 0);
+	function getPosition(e) {
+		var x = (y = 0);
 
-    if (!e) {
-      var e = window.event;
-    }
+		if (!e) {
+			var e = window.event;
+		}
 
-    if (e.pageX || e.pageY) {
-      x = e.pageX;
-      y = e.pageY;
-    } else if (e.clientX || e.clientY) {
-      x =
-        e.clientX +
-        document.body.scrollLeft +
-        document.documentElement.scrollLeft;
-      y =
-        e.clientY +
-        document.body.scrollTop +
-        document.documentElement.scrollTop;
-    }
+		if (e.pageX || e.pageY) {
+			x = e.pageX;
+			y = e.pageY;
+		} else if (e.clientX || e.clientY) {
+			x =
+				e.clientX +
+				document.body.scrollLeft +
+				document.documentElement.scrollLeft;
+			y =
+				e.clientY +
+				document.body.scrollTop +
+				document.documentElement.scrollTop;
+		}
 
-    return { x: x, y: y };
-  }
+		return { x: x, y: y };
+	}
 
-  ///////////////////////////////перетаскивание на громкости
-  let elGain = document.getElementById("EllipseGain");
-  let x_elGain = 84;
+	///////////////////////////////перетаскивание на громкости
+	let elGain = document.getElementById("EllipseGain");
+	let x_elGain = 84;
 
-  elGain.onmousedown = function (e) {
-    let coords = getCoords(elGain);
-    let shiftX = e.clientX - parseInt(x_elGain);
+	elGain.addEventListener('mousedown', function (e) {
+		let coords = getCoords(elGain);
+		let shiftX = e.clientX - parseInt(x_elGain);
 
-    moveAt(e);
+		moveAt(e);
 
-    function moveAt(e) {
-      elGain.style.left = e.pageX - shiftX + "px";
-      x_elGain = parseFloat(elGain.style.left);
-      $(".gain-red-timeline").css({
-        width: parseFloat(elGain.style.left) + 1 + "%",
-      });
-    }
+		function moveAt(e) {
+			elGain.style.left = e.pageX - shiftX + "px";
+			x_elGain = parseFloat(elGain.style.left);
+			$(".gain-red-timeline").css({
+				width: parseFloat(elGain.style.left) + 1 + "%",
+			});
+		}
 
-    document.onmousemove = function (e) {
-      moveAt(e);
-      let checker = elGain.style.left;
+		document.onmousemove = function (e) {
+			moveAt(e);
+			let checker = elGain.style.left;
 
-      let coord = getPosition(e);
+			let coord = getPosition(e);
 
-      checker = parseInt(checker);
-      console.log(checker);
-      if (checker < 0) {
-        x_elGain = 0;
-        $(".gain-red-timeline").css({ width: 0 + "%" });
-        elGain.style.left = x_elGain + "px";
-        Song.volume = 0;
-        elGain.onmouseup();
-      }
-      if (checker > 88) {
-        x_elGain = 88;
-        $(".gain-red-timeline").css({ width: 100 + "%" });
-        elGain.style.left = x_elGain + "px";
-        Song.volume = 1;
-        elGain.onmouseup();
-      }
-      if (coord.y < 505 || coord.y > 528) {
-        elGain.onmouseup();
-      }
-    };
-    elGain.onmouseup = function () {
-      elGain.style.left = x_elGain + "px";
-      document.onmousemove = null;
-      elGain.onmouseup = null;
-    };
-  };
-  elGain.ondragstart = function () {
-    return false;
-  };
+			checker = parseInt(checker);
+			console.log(checker);
+			if (checker < 0) {
+				x_elGain = 0;
+				$(".gain-red-timeline").css({ width: 0 + "%" });
+				elGain.style.left = x_elGain + "px";
+				Song.volume = 0;
+				elGain.onmouseup();
+			}
+			if (checker > 88) {
+				x_elGain = 88;
+				$(".gain-red-timeline").css({ width: 100 + "%" });
+				elGain.style.left = x_elGain + "px";
+				Song.volume = 1;
+				elGain.onmouseup();
+			}
+			if (coord.y < 505 || coord.y > 528) {
+				elGain.onmouseup();
+			}
+		};
+		
+		elGain.onmouseup = function () {
+			elGain.style.left = x_elGain + "px";
+			document.onmousemove = null;
+			elGain.onmouseup = null;
+		};
+	});
+	
+
+
+
   function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     let x = document.getElementById("grt").style.width;
@@ -91,7 +93,7 @@ $(document).ready(function () {
   let x_elTimeline = 0;
   let shiftTimeline = 0;
 
-  elTimeline.onmousedown = function (e) {
+	elTimeline.addEventListener("mousedown", function (e) {
     let coords = getCoords(elTimeline);
     let shiftX = e.clientX - parseInt(x_elTimeline);
     console.log(shiftX);
@@ -134,17 +136,19 @@ $(document).ready(function () {
       if (coord.y < 505 || coord.y > 525) {
         elTimeline.onmouseup();
       }
-    };
+		};
+		
     elTimeline.onmouseup = function () {
       elTimeline.style.left = x_elTimeline + "px";
       console.log(elTimeline.style.left);
       document.onmousemove = null;
       elTimeline.onmouseup = null;
     };
-  };
-  elTimeline.ondragstart = function () {
-    return false;
-  };
+	});
+
+	
+
+	
   function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     let x = document.getElementById("rt").style.width;
@@ -182,9 +186,10 @@ $(document).ready(function () {
       "url('img/audioplayer/covers/с3.jpg')"),
   };
 
-  var id_song,
-    Song,
-    vol = 1; //vol для сейва громкости при переключении песни
+	var id_song = 1;
+	var Song = 1;
+	var vol = 1; //vol для сейва громкости при переключении песни
+
   var tracklist = [
     (track1 = ["a0", "tracklist/Castle_Bravo_Порталы.mp3"]),
     (track2 = ["a1", "tracklist/1.mp3"]),
@@ -216,18 +221,22 @@ $(document).ready(function () {
     lastPlay = id; //передаем id играющей песни
     //console.log(x)
     //console.log(id)
-    Song = new Audio(tracklist[x][1]);
+		Song = new Audio(tracklist[x][1]);
+		
     Song.play();
 
     Song.addEventListener("timeupdate", function () {
-      curtime = Math.ceil(Song.currentTime);
-      //		console.log((parseInt(Song.currentTime/60)+':'+parseInt(Song.currentTime%60)))
+			curtime = Math.ceil(Song.currentTime);
+			
+			//		console.log((parseInt(Song.currentTime/60)+':'+parseInt(Song.currentTime%60)))
+			
       cur =
         100 -
         ((parseInt(Song.duration) - Math.ceil(Song.currentTime)) * 100) /
           parseInt(Song.duration);
       /*console.log(cur)* текущее время на таймлайне */
-      $(".red-timeline").css({ width: cur + "%" });
+			$(".red-timeline").css({ width: cur + "%" });
+			
       if (curtime % 60 < 10) {
         $(".first-time").text(
           parseInt(curtime / 60) + ":0" + parseInt(curtime % 60)
@@ -275,8 +284,10 @@ $(document).ready(function () {
     console.log("картинка сменилась и эта функция не действует в потоке");
   }
 
-  let lastPlay = "none"; //переменная была вынесена, чтобы при каждом клике не обновлялась на none
-  document.getElementById("allTracks").onclick = function () {
+	let lastPlay = "none"; //переменная была вынесена, чтобы при каждом клике не обновлялась на none
+	
+	document.getElementById("allTracks").onclick = function () {
+		
     document.addEventListener("click", open, false);
 
     console.log("1");
@@ -289,7 +300,8 @@ $(document).ready(function () {
           //включает трек
           if (tracklist[i][0] !== lastPlay) {
             //чтобы при игре трека и повторном нажатии на картинку трек не начинался заново
-            id = tracklist[i][0];
+						id = tracklist[i][0];
+						
             if (Song) {
               if (id == lastPlay) {
               } else {
@@ -305,7 +317,8 @@ $(document).ready(function () {
         }
       } //замена картинки на играющий сейчас трек
     }
-  };
+	};
+	
   $(".timeline").on("mouseenter", function () {
     //главный серый таймлайн
     if (Song) {
@@ -331,6 +344,7 @@ $(document).ready(function () {
       });
     }
   });
+
   $(".red-timeline").on("mouseenter", function () {
     //главный красный таймлайн
     if (Song) {
@@ -355,6 +369,7 @@ $(document).ready(function () {
       });
     }
   });
+
   $(".gain-timeline").on("mouseenter", function () {
     //громкость серый таймлайн
     if (Song) {
@@ -389,7 +404,8 @@ $(document).ready(function () {
         });
       });
     }
-  });
+	});
+	
   $(".gain-red-timeline").on("mouseenter", function () {
     //громкость красный таймлайн
     //ЗДЕСЬ ИДУТ СКАЧКИ!!!!!!!!!!!!!!!!!!!!!
@@ -428,7 +444,37 @@ $(document).ready(function () {
         });
       });
     }
-  });
+	});
+
+  	
+  $(".timeline").on("mouseleave", function onMouseleave() {
+    console.log('TIMELINE, mouseleave')
+
+    $(".timeline").off("mousemove");
+    $(".timeline").off("click");
+  })
+
+  $(".red-timeline").on("mouseleave", function onMouseleave() {
+    console.log('RED-TIMELINE, mouseleave')
+
+    $(".red-timeline").off("mousemove");
+    $(".red-timeline").off("click");
+  })
+
+  $(".gain-timeline").on("mouseleave", function onMouseleave() {
+    console.log('GAIN-TIMELINE, mouseleave')
+
+    $(".gain-timeline").off("mousemove");
+    $(".gain-timeline").off("click");
+  })
+
+  $(".gain-red-timeline").on("mouseleave", function onMouseleave() {
+    console.log('GAIN-RED-TIMELINE, mouseleave')
+
+    $(".gain-red-timeline").off("mousemove");
+    $(".gain-red-timeline").off("click");
+  })
+	
   $(".stop").on("click", function () {
     //пауза песни
     console.log(x);
