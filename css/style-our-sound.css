@@ -1,0 +1,333 @@
+
+/*======================================================*/
+
+.main {
+	/* border: 1px solid; */
+	margin: auto;
+	width: 1048px;
+
+}
+
+.main__title {
+	margin: auto; /* центрирование блока */
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 478px;
+
+	/*border: 1px solid;*/
+
+
+}
+
+.lines {
+	width: 36px;
+	height: 0px;
+	border-top: 4px solid #ED1B24;
+	margin-top:84px;
+}
+/*=================================================*/
+.main__web-audioplayer {
+	display:flex;
+	justify-content: center;
+	padding-bottom:64px;
+
+	-webkit-touch-callout: none; /* iOS Safari */
+  	-webkit-user-select: none;   /* Chrome/Safari/Opera */
+  	-khtml-user-select: none;    /* Konqueror */
+  	-moz-user-select: none;      /* Firefox */
+  	-ms-user-select: none;       /* Internet Explorer/Edge */
+  	user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+}
+.field-player {
+	width:664px;
+	height:167px;
+	background-color:#F4F1F1;
+	position: relative;
+
+}
+.now-playing {
+	width:167px;
+	height:167px;
+	background-color:grey;
+
+}
+.all-controls { /*выделяем место для основных кнопок*/
+	position: absolute;
+	/*background-color:black;*/
+	width:497px; /*664-167 | ! 497 !*/
+	height:167px; /*! 167 !*/
+	top:0; 
+	right:0;
+
+}
+.field-buttons {
+	height:86px;
+	width:381px; /*497-116 | 116 - это длина кнопки + отсут от края*/
+	background-color: ;
+	display:flex;
+	justify-content: center;
+
+}
+.block-buttons {
+	display:flex;
+	justify-content:center;
+	position: relative;
+	width:116px;
+	height:19px;
+	/*background-color: red;*/
+	margin-top:27px;
+}
+.left {
+	background-image: url(../img/audioplayer/left.svg);
+	background-repeat:no-repeat;
+	width:100%;
+	height:100%;
+}
+.pos-left {
+	position:absolute;
+	width: 19px;
+	height:19px;
+	left:0px;
+	top:0;
+}
+.left:hover {
+	cursor: pointer;
+}
+.stop {
+	background-image: url(../img/audioplayer/stop.svg);
+	background-repeat:no-repeat;
+	width:100%;
+	height:100%;
+}
+.pos-stop {
+	display:flex;
+	position:absolute;
+	width: 19px;
+	height:20px;
+	top:-1px;
+}
+.stop:hover {
+	cursor: pointer;
+}
+.right {
+	background-image: url(../img/audioplayer/right.svg);
+	background-repeat:no-repeat;
+	width:100%;
+	height:100%;
+}
+
+.pos-right {
+	position:absolute;
+	width: 19px;
+	height:19px;
+	right:-2px;
+	top:0;
+}
+.right:hover {
+	cursor: pointer;
+}
+
+.random-button {
+	position: absolute;
+	width: 91px;
+	height: 26px;
+	right: 25px;
+	top: 23px;
+
+	background-color: #ED1B24;
+	border-radius: 2px;
+
+	cursor:pointer;
+}
+.field-timeline {
+	position: absolute;
+	height:81px; /*167-86*/
+	width:381px; 
+	/*background-color:darkblue;*/
+	bottom:0;
+
+	display:flex;
+	justify-content: center;
+}
+.timeline {
+	position: absolute;
+	width: 318px;
+	height: 4px;
+	background-color:#8D8D8D;
+	border:0;
+	cursor:pointer;
+	top:-7px;
+
+}
+.wrap-timeline {
+	position: relative;
+	width: 318px;
+	height: 4px;
+	padding:0;
+	margin:0;
+	top:28px;
+	/*это врапер, чтобы можно было установить длину в процентах у red-timeline*/
+}
+.red-timeline {
+	position: absolute;
+	width: 0%;
+	height: 4px;
+	background-color:#ED1B24;
+	border:0;
+	top:1px;
+	cursor:pointer;
+	
+}
+.ellipse-timeline {
+	
+	
+	background-image: url(../img/audioplayer/ellipse-timeline.svg);
+	cursor:pointer;
+	width:12px;
+	height:12px;
+	margin:-4px -5px 0 0;
+
+	float:right;
+	 /*нулевая позиция (разница в 1px) */
+	 /*фулловая позиция*/
+	
+	
+}
+
+.first-time {
+	position: absolute;
+	left:31px;
+	margin-top:-2px;
+
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 19px;
+	/* identical to box height */
+
+	letter-spacing: 0.07em;
+
+	color: #ED1B24;
+}
+.second-time {
+	position: absolute;
+	right:31px;
+	margin-top:-2px;
+
+	font-family: Open Sans;
+	font-style: normal;
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 19px;
+	/* identical to box height */
+
+	letter-spacing: 0.07em;
+
+	color: #ED1B24;
+}
+.gain {
+}
+.gain-timeline {
+	position: absolute;
+	width: 91px;
+	height: 4px;
+	background-color:#8D8D8D;
+	border:0;
+	cursor: pointer;
+	
+	bottom:-7px;	
+}
+.wrap-gain-timeline {
+	position: absolute;
+	width: 91px;
+	height: 4px;
+	padding:0;
+	margin:0;
+	cursor:pointer;
+	/*это врапер, чтобы можно было установить длину в процентах у red-timeline*/
+	right: 25px;
+	bottom:47px;
+}
+.gain-red-timeline {
+	position: absolute;
+	width: 100%;
+	height: 4px;
+	background-color:#ED1B24;
+	border:0;
+	float:left;
+	left: 0px;
+	bottom:1px;
+	
+}
+.ellipse-gain {
+	position: absolute;
+	left: 86px;
+	
+	background-image: url(../img/audioplayer/ellipse-gain.svg);
+	cursor:pointer;
+	width:12px;
+	height:12px;
+	float:right;
+	margin:-4px -7px 0 ;
+
+	
+}
+#EllipseGain {
+	opacity: 1;
+}
+
+.now-playing {
+	background-size: 100%;
+}
+.audio-block {
+	cursor: pointer;
+	background-size: 100%;
+}
+/*=================================================*/
+.main__playlist-block {
+	display:flex;
+	width: 962px;
+	height: 733px;
+	background-color: #F4F1F1;
+	border-radius: 15px;
+
+	margin:auto; /*центрирование*/
+	padding:0;
+}
+.main__playlist-content {
+	display:flex;
+	flex-flow: row wrap; /*автоматические переносы*/
+	width: 884px;
+	height: 661px;
+ 	
+ 	justify-content: space-between; /*авто-расстояние между блоками по горизонтале */
+    margin: auto; /*центрирование*/
+    padding:0;
+}
+
+.audio-block {
+	display:flex;
+	margin-bottom: 8px; /*расстояние между блоками по вертикале */
+	width:215px;
+	height:215px;
+	background-color:grey;
+}
+
+/*=================================================*/
+.main__separator {
+	width: 1048px;
+	height: 2px;
+	margin: auto;
+	background: #ED1B24;
+	border:0;
+	margin-top:40px;
+	margin-bottom:40px;
+}
+
+.youtube-frame {
+	text-align:center;
+	margin-bottom:64px;
+}

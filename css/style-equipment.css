@@ -1,0 +1,215 @@
+
+/*======================================================*/
+
+.main {
+	/* border: 1px solid; */
+	margin: auto;
+	width: 1048px;
+
+}
+
+.main__title {
+	margin: auto; /* центрирование блока */
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 478px;
+
+	/*border: 1px solid;*/
+
+
+}
+
+.lines {
+	width: 36px;
+	height: 0px;
+	border-top: 4px solid #ED1B24;
+	margin-top:84px;
+}
+/*=================================================*/
+
+/*=================================================*/
+.main__equipment-block {
+	display:flex;
+	
+	width:1048px;
+	
+	background-color: #F4F1F1;
+	border-radius: 15px;
+	margin:auto; /*центрирование*/
+	
+	margin-bottom:64px;
+}
+.main__block-content {
+	display:flex;
+	flex-flow: row wrap; /*автоматические переносы*/
+	padding:  36px 39px 36px 39px;
+	
+ 	justify-content: space-between; /*авто-расстояние между блоками по горизонтали */
+    margin: auto; /*центрирование*/
+   
+}
+
+.eq-block {
+	
+	display:flex;
+	margin-bottom: 28px; /*расстояние между блоками по вертикали */
+	width:215px;
+	height:215px;
+	background-color:grey;
+	border: 1px solid #ED1B24 ;
+}
+.eq-block:hover {
+	outline: 3px solid #ED1B24 ;
+}
+
+.info-center {
+	opacity:0;
+	position: absolute;
+	z-index: 100;
+	background-color: rgba(20, 20, 20, 0.9);
+	border-radius: 10px;
+	color:white;
+	width:690px;
+	pointer-events: none;
+	padding: 10px 45px 18px 45px;
+
+	left: 0;
+	right: 0;
+	margin: 0 auto;
+}
+
+.p-information {
+
+	font-family: Arial;
+	font-style: normal;
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 25px;
+	/* or 25px */
+
+	letter-spacing: 0.02em;
+	text-indent: 40px;
+	margin-bottom: 11px;
+
+	color: #FFF;
+}
+
+/*=================================================*/
+
+#a0 {
+	background: url('../img/equipment/1-1.png');
+	background-size:100%;
+}
+#a1 {
+	background: url('../img/equipment/2-1.png');
+	background-size:100%;
+}
+#a2 {
+	background: url('../img/equipment/3-1.png');
+	background-size:100%;
+}
+#a3 {
+	background: url('../img/equipment/4-1.png');
+	background-size:100%;
+}
+#a4 {
+	background: url('../img/equipment/5-1.png');
+	background-size:100%;
+}
+#a5 {
+	background: url('../img/equipment/6-1.png');
+	background-size:100%;
+}
+#a6 {
+	background: url('../img/equipment/7-1.png');
+	background-size:100%;
+}
+#a7 {
+	background: url('../img/equipment/8-1.png');
+	background-size:100%;
+}
+#a8 {
+	background: url('../img/equipment/9-1.png');
+	background-size:100%;
+}
+#a9 {
+	background: url('../img/equipment/10-1.png');
+	background-size:100%;
+}
+#a10 {
+	background: url('../img/equipment/11-1.png');
+	background-size:100%;
+}
+#a11 {
+	background: url('../img/equipment/12-1.png');
+	background-size:100%;
+}
+#a12 {
+	background: url('../img/equipment/13-1.png');
+	background-size:100%;
+}
+#a13 {
+	background: url('../img/equipment/14-1.png');
+	background-size:100%;
+}
+#a14 {
+	background: url('../img/equipment/15-1.png');
+	background-size:100%;
+}
+#a15 {
+	background: url('../img/equipment/16-1.png');
+	background-size:100%;
+}
+#a16 {
+	background: url('../img/equipment/17-1.png');
+	background-size:100%;
+}
+#a17 {
+	background: url('../img/equipment/18-1.png');
+	background-size:100%;
+}
+#a18 {
+	background: url('../img/equipment/19-1.png');
+	background-size:100%;
+}
+#a19 {
+	background: url('../img/equipment/20-1.png');
+	background-size:100%;
+}
+#a20 {
+	background: url('../img/equipment/21-1.png');
+	background-size:100%;
+}
+#a21 {
+	background: url('../img/equipment/22-1.png');
+	background-size:100%;
+}
+#a22 {
+	background: url('../img/equipment/23-1.png');
+	background-size:100%;
+}
+#a23 {
+	background: url('../img/equipment/24-1.png');
+	background-size:100%;
+}
+#a24 {
+	background: url('../img/equipment/25-1.png');
+	background-size:100%;
+	margin-bottom: 0px;
+}
+#a25 {
+	background: url('../img/equipment/26-1.png');
+	background-size:100%;
+	margin-bottom: 0px;
+}
+#a26 {
+	background: url('../img/equipment/27-1.png');
+	background-size:100%;
+	margin-bottom: 0px;
+}
+#a27 {
+	background: url('../img/equipment/28-1.png');
+	background-size:100%;
+	margin-bottom: 0px;
+}

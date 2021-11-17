@@ -1,0 +1,101 @@
+
+/*======================================================*/
+
+.main {
+	/* border: 1px solid; */
+	margin: auto;
+	width: 1048px;
+
+}
+
+.main__title {
+	margin: auto; /* центрирование блока */
+	display:flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 336px;
+
+	/*border: 1px solid;*/
+}
+
+.lines {
+	width: 36px;
+	height: 0px;
+	border-top: 4px solid #ED1B24;
+	margin-top:84px;
+}
+
+.main__block-list {
+	display:flex;
+	flex-flow: row wrap;
+	justify-content: space-between;
+}
+.block {
+	background-color: grey;
+	width: 327px;
+	height:214px;
+	margin: 0 0 56px 0;
+	position: relative;
+}
+.red-block {
+	position:absolute;
+	top:0;
+	width:327px;
+	height:40px;
+	background-color: #ED1B24;
+
+}
+.elem {
+	position:absolute;
+	bottom:0;
+	width:327px;
+	height:174px;
+	
+}
+.photo-1 {
+	background-image: url(../img/price/1.png);
+	background-size: 100%;
+}
+.photo-2 {
+	background-image: url(../img/price/2.png);
+	background-size: 100%;
+}
+.photo-3 {
+	background-image: url(../img/price/3.png);
+	background-size: 100%;
+}
+.photo-4 {
+	background-image: url(../img/price/4.png);
+	background-size: 100%;
+}
+.photo-5 {
+	background-image: url(../img/price/5.png);
+	background-size: 100%;
+}
+.photo-6 {
+	background-image: url(../img/price/6.png);
+	background-size: 100%;
+}
+.photo-7 {
+	background-image: url(../img/price/7.png);
+	background-size: 100%;
+}
+.photo-8 {
+	background-image: url(../img/price/8.png);
+	background-size: 100%;
+}
+.photo-9 {
+	background-image: url(../img/price/9.png);
+	background-size: 100%;
+}
+.red-block-price {
+	position:absolute;
+	bottom:0;
+	right:0;
+	width:120px;
+	height:40px;
+	background: rgba(237, 27, 36, 0.6);
+}
+
+/*=================================================*/
+

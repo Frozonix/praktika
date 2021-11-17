@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/style-our-sound.css">
+	
+	<title>CastleRecordZ</title>
+	<style>
+		@font-face {
+    		font-family: title-font; 
+    		src: url(fonts/OpenSans-ExtraBold.ttf);
+   		}
+   		@font-face {
+    		font-family: copyright; 
+    		src: url(fonts/OpenSans-Bold.ttf);
+   		}
+   		@font-face {
+    		font-family: menu-font; 
+    		src: url(fonts/Russo-One.ttf);
+   		}
+   		@font-face {
+    		font-family: arial-bold; 
+    		src: url(fonts/Arial_Bold.ttf);
+   		}
+   		h1 {
+   			font-family: title-font;
+			font-style: normal;
+			font-size: 36px;
+			margin: 64px 0 0 0;
+			padding:0 0 64px 0;
+
+
+			/* identical to box height */
+
+			text-align: center;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+   		}
+   		h2 {
+   			font-family: Arial;
+			font-style: normal;
+			font-weight: bold;
+			font-size: 12px;
+			line-height: 14px;
+
+			letter-spacing: 0.065em;
+			color: #FFFFFF;
+			text-align: center;
+			margin-top: 6px;
+
+			cursor:pointer;
+   		}
+	</style>
+</head>
+<body>
+	<header class="header">
+		<div class="header__logo">
+			<img src="img/logo.png" class="logo">
+		</div>
+		<div class="header__for-fixed">
+		<div class="header__menu">
+			<div class="header__list">
+				<div class="header__point" onclick="window.open('index.html','_self')">
+					<li class="header__elem"><a class="header__a header__order_active" href="index.html">Главная</a>
+				</div>
+				<div class="header__point" onclick="window.open('equipment.html','_self')">
+					<li class="header__elem"><a class="header__a"  href="equipment.html">Оборудование</a>
+				</div>
+				<div class="header__point" onclick="window.open('price.html','_self')">
+					<li class="header__elem"><a class="header__a" href="price.html">Услуги</a>
+				</div>
+				<div class="header__point" onclick="window.open('biography.html','_self')">
+					<li class="header__elem"><a class="header__a" href="biography.html">Биография</a>
+				</div>
+				<div class="header__point" onclick="window.open('our-life.html','_self')">
+					<li class="header__elem"><a class="header__a" href="our-life.html">Мероприятия</a>
+				</div>
+				<div class="header__point">
+					<li class="header__elem"><a class="header__a">Наши работы</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</header>
+	<main class="main">
+		<div class="main__content">
+			<div class="main__title">
+				<hr class="lines" color="#ED1B24">
+				<h1>НАШИ РАБОТЫ</h1>
+				<hr class="lines"   color="#ED1B24">
+			</div>
+			<div class="main__web-audioplayer">
+				<div class="field-player">
+					<div class="now-playing" id="cover-play">
+						
+					</div>
+					<div class="all-controls">
+						<div class="field-buttons">
+							<div class="block-buttons">
+								<div class="pos-left">
+									<div class="left"></div>
+								</div>
+								<div class="pos-stop">
+									<div class="stop" id="stopSong"></div>
+								</div>
+								<div class="pos-right">
+									<div class="right"></div>
+								</div>
+							</div>
+						</div>
+						<div class="random-button">
+							<h2>RANDOM</h2>
+						</div>
+						<div class="field-timeline">
+							<p class="first-time">0:00</p>
+							<p class="second-time">--/--</p>
+							
+							<div class="wrap-timeline">
+								<hr class="timeline">
+								<div class="red-timeline" data-min="0" data-val="100" data-step="0.1" data-max="100" id="rt">
+									<div class="ellipse-timeline" id="EllipseTimeline"></div>
+								</div>
+							</div>
+							
+						</div>
+						<div class="gain">
+							<div class="wrap-gain-timeline">
+								<hr class="gain-timeline">
+								<div class="gain-red-timeline" id="grt">
+									<div class="ellipse-gain" id="EllipseGain">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="main__playlist-block">
+				<div class="main__playlist-content" id="allTracks">
+					<div class="audio1 audio-block" id="a0"></div>
+					<div class="audio2 audio-block" id="a1"></div>
+					<div class="audio3 audio-block" id="a2"></div>
+					<div class="audio4 audio-block" id="a3"></div>
+					<div class="audio5 audio-block" id="a4"></div>
+					<div class="audio6 audio-block" id="a5"></div>
+					<div class="audio7 audio-block" id="a6"></div>
+					<div class="audio8 audio-block" id="a7"></div>
+					<div class="audio9 audio-block" id="a8"></div>
+					<div class="audio10 audio-block" id="a9"></div>
+					<div class="audio11 audio-block" id="a10"></div>
+					<div class="audio12 audio-block" id="a11"></div>
+				</div>
+			</div>
+			<hr class="main__separator">
+			<div class="youtube-frame">
+				<iframe src="https://vk.com/video_ext.php?oid=-203511939&id=456239018&hash=931d098d16f69866&hd=1" width="640" height="360" allow="autoplay; encrypted-media; fullscreen; picture-in-picture;" frameborder="0" poster="IMG_index_1.png" allowfullscreen></iframe>
+			</div>
+		</div>
+		
+	</main>
+	<footer class="footer">
+		<div class="footer__content">
+			<div class="footer__red-line">
+				<hr class="footer__line" color="#ED1B24">
+			</div>
+			<div class="footer__information">
+				<div class="footer__contact-us">
+					<p class="contact-us-text text-footer"> Связаться с нами: </p>
+					<p class="phone-number"> +7 (960) 000-15-17 </p>
+				</div>
+				<div class="footer__map">
+					<p class="map1 text-footer"> Мы находимся по адресу: </p>
+					<p class="map2"><a href="https://yandex.ru/maps/-/CCUuEHF2pB" class="map2"> Архангельск, п. Ломоносова, 269</a></p>
+				</div>
+				<div class="footer__links" align="right">
+					<ul class="footer__list">
+					<li class="footer__list-elem"><a class="footer__VK" href="https://www.instagram.com/castlerecordz/">
+						<img src="img/links/Instagram.svg" class="footer__links-img">
+						<img src="img/links/Instagram-border.svg" class="footer__links-img-border">
+					</a>
+					<li class="footer__list-elem"><a class="footer__FB" href="https://vk.com/castlerecordz">
+						<img src="img/links/VK.svg" class="footer__links-img">
+						<img src="img/links/VK-border.svg" class="footer__links-img-border">
+					</a>
+					<li class="footer__list-elem"><a class="footer__INST" href="https://www.youtube.com/channel/UCrPtVfNFQbybACUwQ7o58eg">
+						<img src="img/links/Youtube.svg" class="footer__links-img">
+						<img src="img/links/Youtube-border.svg" class="footer__links-img-border">
+					</a>
+					<li class="footer__list-elem"><a class="footer__T" href="https://www.tiktok.com/@castlerecordz?">
+						<img src="img/links/Tiktok.svg" class="footer__links-img">
+						<img src="img/links/Tiktok-border.svg" class="footer__links-img-border">
+					</a>
+					<li class="footer__list-elem"><a class="footer__WA" href="#">
+						<img src="img/links/Whatsapp.svg" class="footer__links-img">
+						<img src="img/links/Whatsapp-border.svg" class="footer__links-img-border">
+					</a>
+				</ul>
+				</div>
+			</div>
+			<div class="footer__separator">
+				<hr class="line-separator" color="#ED1B24" size="1">
+			</div>
+			<div class="footer__copyright">
+				<p><span class="copyright_year">© 2021</span> castlerecordz.ru</p>
+			</div>
+		</div>
+	</footer>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery.ui.touch-punch.min.js"></script>
+	<script src="js/audioplayer-script.js" type="text/javascript"></script>
+	<script src="js/script.js" type="text/javascript"></script>
+
+
+
+	
+</body>
+</html>
