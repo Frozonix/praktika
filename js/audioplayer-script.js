@@ -1,83 +1,78 @@
 $(document).ready(function () {
-	function getPosition(e) {
-		var x = (y = 0);
+  function getPosition(e) {
+    var x = (y = 0);
 
-		if (!e) {
-			var e = window.event;
-		}
+    if (!e) {
+      var e = window.event;
+    }
 
-		if (e.pageX || e.pageY) {
-			x = e.pageX;
-			y = e.pageY;
-		} else if (e.clientX || e.clientY) {
-			x =
-				e.clientX +
-				document.body.scrollLeft +
-				document.documentElement.scrollLeft;
-			y =
-				e.clientY +
-				document.body.scrollTop +
-				document.documentElement.scrollTop;
-		}
+    if (e.pageX || e.pageY) {
+      x = e.pageX;
+      y = e.pageY;
+    } else if (e.clientX || e.clientY) {
+      x =
+        e.clientX +
+        document.body.scrollLeft +
+        document.documentElement.scrollLeft;
+      y =
+        e.clientY +
+        document.body.scrollTop +
+        document.documentElement.scrollTop;
+    }
 
-		return { x: x, y: y };
-	}
+    return { x: x, y: y };
+  }
 
-	///////////////////////////////перетаскивание на громкости
-	let elGain = document.getElementById("EllipseGain");
-	let x_elGain = 84;
+  ///////////////////////////////перетаскивание на громкости
+  let elGain = document.getElementById("EllipseGain");
+  let x_elGain = 84;
 
-	elGain.addEventListener('mousedown', function (e) {
-		let coords = getCoords(elGain);
-		let shiftX = e.clientX - parseInt(x_elGain);
+  elGain.onmousedown = function (e) {
+    let coords = getCoords(elGain);
+    let shiftX = e.clientX - parseInt(x_elGain);
 
-		moveAt(e);
+    moveAt(e);
 
-		function moveAt(e) {
-			elGain.style.left = e.pageX - shiftX + "px";
-			x_elGain = parseFloat(elGain.style.left);
-			$(".gain-red-timeline").css({
-				width: parseFloat(elGain.style.left) + 1 + "%",
-			});
-		}
+    function moveAt(e) {
+      elGain.style.left = e.pageX - shiftX + "px";
+      x_elGain = parseFloat(elGain.style.left);
+      $(".gain-red-timeline").css({
+        width: parseFloat(elGain.style.left) + 1 + "%",
+      });
+    }
 
-		document.onmousemove = function (e) {
-			moveAt(e);
-			let checker = elGain.style.left;
+    document.onmousemove = function (e) {
+      moveAt(e);
+      let checker = elGain.style.left;
 
-			let coord = getPosition(e);
+      let coord = getPosition(e);
 
-			checker = parseInt(checker);
-			console.log(checker);
-			if (checker < 0) {
-				x_elGain = 0;
-				$(".gain-red-timeline").css({ width: 0 + "%" });
-				elGain.style.left = x_elGain + "px";
-				Song.volume = 0;
-				elGain.onmouseup();
-			}
-			if (checker > 88) {
-				x_elGain = 88;
-				$(".gain-red-timeline").css({ width: 100 + "%" });
-				elGain.style.left = x_elGain + "px";
-				Song.volume = 1;
-				elGain.onmouseup();
-			}
-			if (coord.y < 505 || coord.y > 528) {
-				elGain.onmouseup();
-			}
-		};
-		
-		elGain.onmouseup = function () {
-			elGain.style.left = x_elGain + "px";
-			document.onmousemove = null;
-			elGain.onmouseup = null;
-		};
-	});
-	
-
-
-
+      checker = parseInt(checker);
+      console.log(checker);
+      if (checker < 0) {
+        x_elGain = 0;
+        $(".gain-red-timeline").css({ width: 0 + "%" });
+        elGain.style.left = x_elGain + "px";
+        Song.volume = 0;
+        elGain.onmouseup();
+      }
+      if (checker > 88) {
+        x_elGain = 88;
+        $(".gain-red-timeline").css({ width: 100 + "%" });
+        elGain.style.left = x_elGain + "px";
+        Song.volume = 1;
+        elGain.onmouseup();
+      }
+    };
+    elGain.onmouseup = function () {
+      elGain.style.left = x_elGain + "px";
+      document.onmousemove = null;
+      elGain.onmouseup = null;
+    };
+  };
+  elGain.ondragstart = function () {
+    return false;
+  };
   function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     let x = document.getElementById("grt").style.width;
@@ -91,33 +86,50 @@ $(document).ready(function () {
   ///////////////////////////////перетаскивание на таймлайне
   let elTimeline = document.getElementById("EllipseTimeline");
   let x_elTimeline = 0;
-  let shiftTimeline = 0;
+  let shiftTimelineInPercents = 0;
+  let lastTime = 0;
+  let timeNow = 0;
+  let difference = 0;
 
-	elTimeline.addEventListener("mousedown", function (e) {
+  elTimeline.onmousedown = function (e) {
     let coords = getCoords(elTimeline);
-    let shiftX = e.clientX - parseInt(x_elTimeline);
-    console.log(shiftX);
+
+    let shiftX = e.clientX - parseFloat(x_elTimeline); //- Math.abs(difference) ????????
+    timeNow = (Song.currentTime / Song.duration) * 100; //перевод текущего времени в проценты
+
+    if (timeNow > lastTime) {
+      difference = timeNow - lastTime;
+
+      console.log(difference);
+    } else {
+      difference = lastTime - timeNow;
+
+      console.log(difference);
+    }
 
     moveAt(e);
 
     function moveAt(e) {
-      elTimeline.style.left = e.pageX - shiftX + "px";
-      x_elTimeline = elTimeline.style.left;
-      console.log(parseInt(elTimeline.style.left));
-      shiftTimeline = (parseFloat(elTimeline.style.left) / 318) * 100;
-      $(".red-timeline").css({ width: shiftTimeline + "%" });
-      Song.currentTime = parseFloat((shiftTimeline * Song.duration) / 100);
+      //вряд ли проблема здесь
+
+      elTimeline.style.left = e.pageX - shiftX + "px"; //присваиваем координаты ползунку (возможно трабл тут)
+      console.log(elTimeline.style.left);
+      x_elTimeline = elTimeline.style.left; //передаем текущие координаты
+      shiftTimelineInPercents =
+        (parseFloat(elTimeline.style.left) / 318) * 100 + difference; //получаем процентное значение где сейчас находится ползунок
+      $(".red-timeline").css({ width: shiftTimelineInPercents + "%" }); //встраиваем это процентное значение в стили
+      Song.currentTime = parseFloat(
+        (shiftTimelineInPercents * Song.duration) / 100
+      ); //устанавливаем текущее время через процентное значение
     }
 
     document.onmousemove = function (e) {
       moveAt(e);
       let checker = elTimeline.style.left;
 
-      checker = parseInt(checker);
-
       let coord = getPosition(e);
 
-      console.log(checker);
+      checker = parseInt(checker);
 
       if (checker < 0) {
         x_elTimeline = 0;
@@ -127,28 +139,27 @@ $(document).ready(function () {
         elTimeline.onmouseup();
       }
       if (checker > 318) {
-        x_elGain = 318;
+        x_elTimeline = 318;
         $(".red-timeline").css({ width: 100 + "%" });
         elTimeline.style.left = x_elTimeline + "px";
 
         elTimeline.onmouseup();
       }
-      if (coord.y < 505 || coord.y > 525) {
+      if (coord.y < 475 || coord.y > 525) {
         elTimeline.onmouseup();
       }
-		};
-		
+    };
     elTimeline.onmouseup = function () {
       elTimeline.style.left = x_elTimeline + "px";
-      console.log(elTimeline.style.left);
+      lastTime = (Song.currentTime / Song.duration) * 100; //перевод последнего времени в проценты
+      console.log(lastTime);
       document.onmousemove = null;
       elTimeline.onmouseup = null;
     };
-	});
-
-	
-
-	
+  };
+  elTimeline.ondragstart = function () {
+    return false;
+  };
   function getCoords(elem) {
     let box = elem.getBoundingClientRect();
     let x = document.getElementById("rt").style.width;
@@ -161,13 +172,13 @@ $(document).ready(function () {
 
   let cover = {
     a0: (document.getElementById("a0").style.backgroundImage =
-      "url('img/audioplayer/covers/с1.jpg')"),
+      "url('img/audioplayer/covers/c4.jpg')"),
     a1: (document.getElementById("a1").style.backgroundImage =
-      "url('img/audioplayer/covers/с2.jpg')"),
+      "url('img/audioplayer/covers/c4.jpg')"),
     a2: (document.getElementById("a2").style.backgroundImage =
-      "url('img/audioplayer/covers/с1.jpg')"),
+      "url('img/audioplayer/covers/c4.jpg')"),
     a3: (document.getElementById("a3").style.backgroundImage =
-      "url('img/audioplayer/covers/с2.jpg')"),
+      "url('img/audioplayer/covers/c4.jpg')"),
     a4: (document.getElementById("a4").style.backgroundImage =
       "url('img/audioplayer/covers/с1.jpg')"),
     a5: (document.getElementById("a5").style.backgroundImage =
@@ -179,28 +190,33 @@ $(document).ready(function () {
     a8: (document.getElementById("a8").style.backgroundImage =
       "url('img/audioplayer/covers/с1.jpg')"),
     a9: (document.getElementById("a9").style.backgroundImage =
-      "url('img/audioplayer/covers/с2.jpg')"),
+      "url('img/audioplayer/covers/с3.jpg')"),
     a10: (document.getElementById("a10").style.backgroundImage =
       "url('img/audioplayer/covers/с1.jpg')"),
     a11: (document.getElementById("a11").style.backgroundImage =
       "url('img/audioplayer/covers/с3.jpg')"),
   };
 
-	var id_song = 1;
-	var Song = 1;
-	var vol = 1; //vol для сейва громкости при переключении песни
-
+  var id_song,
+    Song,
+    vol = 1; //vol для сейва громкости при переключении песни
   var tracklist = [
-    (track1 = ["a0", "tracklist/Castle_Bravo_Порталы.mp3"]),
-    (track2 = ["a1", "tracklist/1.mp3"]),
-    (track3 = ["a2", "tracklist/Castle_Bravo_Порталы.mp3"]),
-    (track4 = ["a3", "tracklist/1.mp3"]),
-    (track5 = ["a4", "tracklist/Castle_Bravo_Порталы.mp3"]),
-    (track6 = ["a5", "tracklist/1.mp3"]),
+    (track1 = ["a0", "tracklist/Celldweller - Ghosts (feat. Tom Salta).mp3"]),
+    (track2 = [
+      "a1",
+      "tracklist/Celldweller - Frozen (Celldweller vs Blue Stahli) (Official Music Video).mp3",
+    ]),
+    (track3 = [
+      "a2",
+      "tracklist/Celldweller - Shapeshifter (feat. Styles of Beyond).mp3",
+    ]),
+    (track4 = ["a3", "tracklist/Celldweller - The Last Firstborn.mp3"]),
+    (track5 = ["a4", "tracklist/Blue Stahli - 'ULTRAnumb'.mp3"]),
+    (track6 = ["a5", "tracklist/Blue Stahli - Lakes Of Flame.mp3"]),
     (track7 = ["a6", "tracklist/Castle_Bravo_Порталы.mp3"]),
     (track8 = ["a7", "tracklist/1.mp3"]),
     (track9 = ["a8", "tracklist/Castle_Bravo_Порталы.mp3"]),
-    (track10 = ["a9", "tracklist/1.mp3"]),
+    (track10 = ["a9", "tracklist/2.mp3"]),
     (track11 = ["a10", "tracklist/Castle_Bravo_Порталы.mp3"]),
     (track12 = ["a11", "tracklist/2.mp3"]),
   ];
@@ -221,22 +237,18 @@ $(document).ready(function () {
     lastPlay = id; //передаем id играющей песни
     //console.log(x)
     //console.log(id)
-		Song = new Audio(tracklist[x][1]);
-		
+    Song = new Audio(tracklist[x][1]);
     Song.play();
 
     Song.addEventListener("timeupdate", function () {
-			curtime = Math.ceil(Song.currentTime);
-			
-			//		console.log((parseInt(Song.currentTime/60)+':'+parseInt(Song.currentTime%60)))
-			
+      curtime = Math.ceil(Song.currentTime);
+      //		console.log((parseInt(Song.currentTime/60)+':'+parseInt(Song.currentTime%60)))
       cur =
         100 -
         ((parseInt(Song.duration) - Math.ceil(Song.currentTime)) * 100) /
           parseInt(Song.duration);
       /*console.log(cur)* текущее время на таймлайне */
-			$(".red-timeline").css({ width: cur + "%" });
-			
+      $(".red-timeline").css({ width: cur + "%" });
       if (curtime % 60 < 10) {
         $(".first-time").text(
           parseInt(curtime / 60) + ":0" + parseInt(curtime % 60)
@@ -252,6 +264,7 @@ $(document).ready(function () {
         document.getElementById("stopSong").style.backgroundImage =
           "url('img/audioplayer/play.svg')";
         Song.pause();
+        remover();
       }
     });
 
@@ -284,10 +297,8 @@ $(document).ready(function () {
     console.log("картинка сменилась и эта функция не действует в потоке");
   }
 
-	let lastPlay = "none"; //переменная была вынесена, чтобы при каждом клике не обновлялась на none
-	
-	document.getElementById("allTracks").onclick = function () {
-		
+  let lastPlay = "none"; //переменная была вынесена, чтобы при каждом клике не обновлялась на none
+  document.getElementById("allTracks").onclick = function () {
     document.addEventListener("click", open, false);
 
     console.log("1");
@@ -300,14 +311,19 @@ $(document).ready(function () {
           //включает трек
           if (tracklist[i][0] !== lastPlay) {
             //чтобы при игре трека и повторном нажатии на картинку трек не начинался заново
-						id = tracklist[i][0];
-						
+            id = tracklist[i][0];
             if (Song) {
               if (id == lastPlay) {
               } else {
+                console.log(Song);
                 Song.pause();
                 x = i;
                 playNewSong(id, x);
+
+                document.getElementById("stopSong").style.backgroundImage =
+                  "url('img/audioplayer/stop.svg')";
+
+                remover();
               }
             } else {
               x = i;
@@ -317,8 +333,7 @@ $(document).ready(function () {
         }
       } //замена картинки на играющий сейчас трек
     }
-	};
-	
+  };
   $(".timeline").on("mouseenter", function () {
     //главный серый таймлайн
     if (Song) {
@@ -336,15 +351,17 @@ $(document).ready(function () {
           //console.log("1")
           $(".red-timeline").css({ width: xproc + "%" });
 
-          x_elTimeline = parseFloat((xproc * 318) / 100);
-          shiftTimeline = parseFloat((sec / Song.duration) * 100);
-          console.log(shiftTimeline);
+          x_elTimeline = (parseFloat(shiftTimelineInPercents) * 318) / 100;
+          shiftTimelineInPercents = parseFloat((sec / Song.duration) * 100);
+          elTimeline.style.left = (sec / Song.duration) * 318 + "px";
+          console.log(shiftTimelineInPercents);
           Song.currentTime = sec;
+          lastTime = (Song.currentTime / Song.duration) * 100;
+          difference = 0;
         });
       });
     }
   });
-
   $(".red-timeline").on("mouseenter", function () {
     //главный красный таймлайн
     if (Song) {
@@ -357,19 +374,20 @@ $(document).ready(function () {
           xproc = (x * 100) / w,
           sec = (xproc * Song.duration) / 100;
 
-        //console.log(sec)
         $(".red-timeline").on("click", function () {
           console.log("1");
           $(".red-timeline").css({ width: xproc + "%" });
-          x_elTimeline = parseFloat((xproc * 318) / 100);
-          shiftTimeline = parseFloat((sec / Song.duration) * 100);
-          console.log(shiftTimeline);
+          x_elTimeline = (parseFloat(shiftTimelineInPercents) * 318) / 100;
+          shiftTimelineInPercents = parseFloat((sec / Song.duration) * 100);
+          elTimeline.style.left = (sec / Song.duration) * 318 + "px";
+          console.log(shiftTimelineInPercents);
           Song.currentTime = sec;
+          lastTime = (Song.currentTime / Song.duration) * 100;
+          difference = 0;
         });
       });
     }
   });
-
   $(".gain-timeline").on("mouseenter", function () {
     //громкость серый таймлайн
     if (Song) {
@@ -404,8 +422,7 @@ $(document).ready(function () {
         });
       });
     }
-	});
-	
+  });
   $(".gain-red-timeline").on("mouseenter", function () {
     //громкость красный таймлайн
     //ЗДЕСЬ ИДУТ СКАЧКИ!!!!!!!!!!!!!!!!!!!!!
@@ -444,37 +461,34 @@ $(document).ready(function () {
         });
       });
     }
-	});
-
-  	
+  });
   $(".timeline").on("mouseleave", function onMouseleave() {
-    console.log('TIMELINE, mouseleave')
+    console.log("TIMELINE, mouseleave");
 
     $(".timeline").off("mousemove");
     $(".timeline").off("click");
-  })
+  });
 
   $(".red-timeline").on("mouseleave", function onMouseleave() {
-    console.log('RED-TIMELINE, mouseleave')
+    console.log("RED-TIMELINE, mouseleave");
 
     $(".red-timeline").off("mousemove");
     $(".red-timeline").off("click");
-  })
+  });
 
   $(".gain-timeline").on("mouseleave", function onMouseleave() {
-    console.log('GAIN-TIMELINE, mouseleave')
+    console.log("GAIN-TIMELINE, mouseleave");
 
     $(".gain-timeline").off("mousemove");
     $(".gain-timeline").off("click");
-  })
+  });
 
   $(".gain-red-timeline").on("mouseleave", function onMouseleave() {
-    console.log('GAIN-RED-TIMELINE, mouseleave')
+    console.log("GAIN-RED-TIMELINE, mouseleave");
 
     $(".gain-red-timeline").off("mousemove");
     $(".gain-red-timeline").off("click");
-  })
-	
+  });
   $(".stop").on("click", function () {
     //пауза песни
     console.log(x);
@@ -506,6 +520,7 @@ $(document).ready(function () {
       document.getElementById("stopSong").style.backgroundImage =
         "url('img/audioplayer/stop.svg')"; //чтобы в случае нажатия кнопка play не оставалась
 
+      remover();
       console.log(newId);
       console.log(id);
     } else {
@@ -521,6 +536,7 @@ $(document).ready(function () {
       document.getElementById("stopSong").style.backgroundImage =
         "url('img/audioplayer/stop.svg')"; //чтобы в случае нажатия кнопка play не оставалась
 
+      remover();
       console.log(newId);
       console.log(id);
     }
@@ -542,6 +558,8 @@ $(document).ready(function () {
       document.getElementById("stopSong").style.backgroundImage =
         "url('img/audioplayer/stop.svg')"; //чтобы в случае нажатия кнопка play не оставалась
 
+      remover();
+
       console.log(newId);
       console.log(id);
     } else {
@@ -553,16 +571,17 @@ $(document).ready(function () {
       playNewSong(id, x);
 
       swapPicture(newId);
-
       document.getElementById("stopSong").style.backgroundImage =
         "url('img/audioplayer/stop.svg')"; //чтобы в случае нажатия кнопка play не оставалась
 
+      remover();
       console.log(newId);
       console.log(id);
     }
   });
   $(".random-button").on("click", function () {
     //рандом трека
+
     if (Song) {
       Song.pause(id);
     }
@@ -598,7 +617,21 @@ $(document).ready(function () {
       "url('img/audioplayer/stop.svg')"; //чтобы в случае нажатия кнопка play не оставалась
     playNewSong(id, x);
     swapPicture(id);
+
+    remover();
   });
+
+  function remover() {
+    let xproc = (x_elGain * 100) / 88;
+    Song.volume = xproc / 100;
+
+    x_elTimeline = 0;
+    shiftTimelineInPercents = 0;
+    lastTime = 0;
+    timeNow = 0;
+    difference = 0;
+    dragAndDrop = false;
+  }
 });
 
 /*
