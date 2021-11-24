@@ -28,8 +28,7 @@ $(document).ready(function () {
   let x_elGain = 84;
 
   elGain.onmousedown = function (e) {
-    let coords = getCoords(elGain);
-    let shiftX = e.clientX - parseInt(x_elGain);
+     let shiftX = e.clientX - parseInt(x_elGain);
 
     moveAt(e);
 
@@ -45,42 +44,30 @@ $(document).ready(function () {
       moveAt(e);
       let checker = elGain.style.left;
 
-      let coord = getPosition(e);
-
       checker = parseInt(checker);
-      console.log(checker);
+
       if (checker < 0) {
         x_elGain = 0;
         $(".gain-red-timeline").css({ width: 0 + "%" });
         elGain.style.left = x_elGain + "px";
         Song.volume = 0;
-        elGain.onmouseup();
+        document.onmousemove = null
       }
       if (checker > 88) {
         x_elGain = 88;
         $(".gain-red-timeline").css({ width: 100 + "%" });
         elGain.style.left = x_elGain + "px";
         Song.volume = 1;
-        elGain.onmouseup();
+        document.onmousemove = null
       }
     };
-    elGain.onmouseup = function () {
-      elGain.style.left = x_elGain + "px";
-      document.onmousemove = null;
-      elGain.onmouseup = null;
-    };
   };
-  elGain.ondragstart = function () {
-    return false;
-  };
-  function getCoords(elem) {
-    let box = elem.getBoundingClientRect();
-    let x = document.getElementById("grt").style.width;
-    console.log(x);
-    return {
-      left: box.left + pageXOffset,
-    };
-  }
+
+  document.addEventListener("mouseup", function onMouseup(){
+    document.onmousemove = null
+    //lastTime = (Song.currentTime / Song.duration) * 100;
+  });
+
   ////////////////////////////////////////////////////////////////
 
   ///////////////////////////////перетаскивание на таймлайне
@@ -91,13 +78,15 @@ $(document).ready(function () {
   let timeNow = 0;
   let difference = 0;
 
+
   elTimeline.onmousedown = function (e) {
-    let coords = getCoords(elTimeline);
+   
 
     let shiftX = e.clientX - parseFloat(x_elTimeline); //- Math.abs(difference) ????????
     timeNow = (Song.currentTime / Song.duration) * 100; //перевод текущего времени в проценты
 
     if (timeNow > lastTime) {
+
       difference = timeNow - lastTime;
 
       console.log(difference);
@@ -118,9 +107,8 @@ $(document).ready(function () {
       shiftTimelineInPercents =
         (parseFloat(elTimeline.style.left) / 318) * 100 + difference; //получаем процентное значение где сейчас находится ползунок
       $(".red-timeline").css({ width: shiftTimelineInPercents + "%" }); //встраиваем это процентное значение в стили
-      Song.currentTime = parseFloat(
-        (shiftTimelineInPercents * Song.duration) / 100
-      ); //устанавливаем текущее время через процентное значение
+      Song.currentTime = (shiftTimelineInPercents * Song.duration) / 100;
+      //устанавливаем текущее время через процентное значение
     }
 
     document.onmousemove = function (e) {
@@ -135,39 +123,15 @@ $(document).ready(function () {
         x_elTimeline = 0;
         $(".red-timeline").css({ width: 0 + "%" });
         elTimeline.style.left = x_elTimeline + "px";
-
-        elTimeline.onmouseup();
       }
       if (checker > 318) {
         x_elTimeline = 318;
         $(".red-timeline").css({ width: 100 + "%" });
         elTimeline.style.left = x_elTimeline + "px";
+      }     
+    };
+  };
 
-        elTimeline.onmouseup();
-      }
-      if (coord.y < 475 || coord.y > 525) {
-        elTimeline.onmouseup();
-      }
-    };
-    elTimeline.onmouseup = function () {
-      elTimeline.style.left = x_elTimeline + "px";
-      lastTime = (Song.currentTime / Song.duration) * 100; //перевод последнего времени в проценты
-      console.log(lastTime);
-      document.onmousemove = null;
-      elTimeline.onmouseup = null;
-    };
-  };
-  elTimeline.ondragstart = function () {
-    return false;
-  };
-  function getCoords(elem) {
-    let box = elem.getBoundingClientRect();
-    let x = document.getElementById("rt").style.width;
-    console.log(x);
-    return {
-      left: box.left + pageXOffset,
-    };
-  }
   ////////////////////////////////////////////////////////////////
 
   let cover = {
@@ -630,7 +594,6 @@ $(document).ready(function () {
     lastTime = 0;
     timeNow = 0;
     difference = 0;
-    dragAndDrop = false;
   }
 });
 

@@ -4,7 +4,8 @@
 .main {
 	/* border: 1px solid; */
 	margin: auto;
-	width: 1048px;
+	max-width: 1048px;
+	padding:0px 20px 0px 20px;
 
 }
 
@@ -289,23 +290,24 @@
 /*=================================================*/
 .main__playlist-block {
 	display:flex;
-	width: 962px;
+	max-width: 962px;
 	height: 733px;
 	background-color: #F4F1F1;
 	border-radius: 15px;
 
 	margin:auto; /*центрирование*/
-	padding:0;
+
+	
 }
 .main__playlist-content {
 	display:flex;
 	flex-flow: row wrap; /*автоматические переносы*/
-	width: 884px;
+	max-width: 884px;
 	height: 661px;
  	
  	justify-content: space-between; /*авто-расстояние между блоками по горизонтале */
     margin: auto; /*центрирование*/
-    padding:0;
+ 
 }
 
 .audio-block {
@@ -316,9 +318,38 @@
 	background-color:grey;
 }
 
+@media (max-width: 1100px) {
+	.main__playlist-block  {
+		height: 658px;
+	}
+	.main__playlist-content {
+		height: 586px;
+	}
+
+	.audio-block{
+		width:190px;
+		height:190px;
+	}
+
+}
+@media (max-width: 1000px) {
+	.main__playlist-block  {
+	
+		padding:0px 40px 0px 40px;
+	}
+}
+
+
+
+
 /*=================================================*/
+.main__parent-separator {
+	margin: 0 auto;
+	max-width:1048px;
+}
+
 .main__separator {
-	width: 1048px;
+	width:inherit;
 	height: 2px;
 	margin: auto;
 	background: #ED1B24;
